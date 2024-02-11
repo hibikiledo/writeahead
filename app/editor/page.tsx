@@ -78,7 +78,9 @@ export default function EditorPage() {
               <MenubarContent>
                 <MenubarItem onClick={handleNew}>New</MenubarItem>
                 <MenubarItem onClick={handleOpen}>Open</MenubarItem>
-                <MenubarItem disabled={!canSave}>Save</MenubarItem>
+                <MenubarItem onClick={handleSave} disabled={!canSave}>
+                  Save
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
