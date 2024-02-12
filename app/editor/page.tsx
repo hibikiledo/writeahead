@@ -9,11 +9,14 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Theme, useTheme } from "@/context/ThemeContext";
 import { OutputData } from "@editorjs/editorjs";
 
 import { useState } from "react";
 
 export default function EditorPage() {
+  const theme = useTheme();
+
   const [editorData, setEditorData] = useState<{
     key: string;
     data?: OutputData;
@@ -80,6 +83,23 @@ export default function EditorPage() {
                 <MenubarItem onClick={handleOpen}>Open</MenubarItem>
                 <MenubarItem onClick={handleSave} disabled={!canSave}>
                   Save
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+            <MenubarMenu>
+              <MenubarTrigger>Settings</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem
+                  onClick={() => {
+                    const switchThemeMap: Record<Theme, Theme> = {
+                      dark: "light",
+                      light: "dark",
+                    };
+                    theme.switchTheme(switchThemeMap[theme.activeTheme]);
+                  }}
+                >
+                  Switch to{" "}
+                  {{ dark: "light", light: "dark" }[theme.activeTheme]} theme
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

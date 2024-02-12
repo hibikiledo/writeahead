@@ -1,5 +1,7 @@
+import { Theme, ThemeContextProvider } from "@/context/ThemeContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,9 +16,20 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = getTheme();
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${theme}`}>
+        <ThemeContextProvider initialTheme={theme}>
+          {children}
+        </ThemeContextProvider>
+      </body>
     </html>
   );
+}
+
+function getTheme() {
+  const theme = cookies().get("theme")?.value as Theme | undefined;
+  return theme || "light";
 }
